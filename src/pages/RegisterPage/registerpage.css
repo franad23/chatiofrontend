@@ -1,0 +1,56 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --EerieBlack-: #242424;
+  --WhiteSmoke-: #f5f5f5;
+  --AirSuperiorityBLue-: #749baa;
+  --Cerise-: #e73665;
+  --SeaGreen-: #488b49;
+  --Font-: 'Montserrat', sans-serif;
+  /* Recordar 200, 400 y 600 */ 
+  color: var(--WhiteSmoke-);
+  background-color: var(--EerieBlack-);
+  font-family: var(--Font-);
+}
+.mainContainerRegisterPage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.registerContainer{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid white;
+  padding: 50px 30px;
+  border-radius: 5px;
+}
+.inputFieldsContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btnRegister{
+  height: 30px;
+  border-radius: 3px;
+  background-color: var(--SeaGreen-);
+  color: var(--WhiteSmoke-);
+  border: transparent 1px solid;
+  font-family: var(--Font-);
+}
+.btnRegister:hover {
+  cursor: pointer;
+  border: 1px solid white;
+}
+.toLoginContainer {
+  text-align: end;
+}
+.toLogin {
+  cursor: pointer;
+  color: var(--WhiteSmoke-);
+}
