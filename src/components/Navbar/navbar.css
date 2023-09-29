@@ -1,0 +1,50 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --EerieBlack-: #242424;
+  --WhiteSmoke-: #f5f5f5;
+  --AirSuperiorityBLue-: #749baa;
+  --Cerise-: #e73665;
+  --SeaGreen-: #488b49;
+  --Font-: 'Montserrat', sans-serif;
+  /* Recordar 200, 400 y 600 */ 
+  color: var(--WhiteSmoke-);
+  background-color: var(--EerieBlack-);
+  font-family: var(--Font-);
+}
+
+.navbarMainContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+  border-bottom: 1px solid var(--AirSuperiorityBLue-);
+}
+
+.logoContainer{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chatlogo{
+  width: 50px;
+}
+.navbarTitle{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.rightContainerNavbar {
+  display: flex;
+  gap: 15px;
+}
+.userIcon {
+  width: 25px;
+}
+
+.userIcon:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
