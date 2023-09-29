@@ -1,20 +1,34 @@
 import { Link } from "react-router-dom";
 import { FormEvent } from "react";
+import { Toaster, toast } from 'sonner'
 import './loginpage.css';
 
 //Components
 import InputShared from '../../components/Shared/InputShared/InputShared';
 
+//API
+import { loginUser } from "../../api/auth";
+
 function LoginPage() {
 
-  const handleSubmitLoginPage = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitLoginPage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log((e.currentTarget.elements[0] as HTMLInputElement).value);
-    console.log((e.currentTarget.elements[1] as HTMLInputElement).value);
+    const username = (e.currentTarget.elements[0] as HTMLInputElement).value;
+    const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
+    if (!username || !password) {
+      return toast.error('Por favor llena todos los campos');
+    }
+    try {
+      const response =  await loginUser(username, password);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   } 
 
   return (
     <div className='mainContainerRegisterPage'>
+      <Toaster position="top-right"/>
       <form className='registerContainer' onSubmit={handleSubmitLoginPage}>
         <div className='inputFieldsContainer'>
           <InputShared
