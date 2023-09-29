@@ -7,7 +7,7 @@ import './registerpage.css';
 import InputShared from '../../components/Shared/InputShared/InputShared';
 
 //API
-import { registerUser } from "../../api/auth";
+import { registerUser } from "../../api/auth.api";
 
 function RegisterPage() {
 

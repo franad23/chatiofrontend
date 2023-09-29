@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
 import { FormEvent } from "react";
 import { Toaster, toast } from 'sonner'
+import { useAuthStore } from "../../store/auth.store";
 import './loginpage.css';
 
 //Components
 import InputShared from '../../components/Shared/InputShared/InputShared';
 
 //API
-import { loginUser } from "../../api/auth";
+import { loginUser } from "../../api/auth.api";
 
 function LoginPage() {
+
+  const setToken = useAuthStore(state => state.setToken);
+  const setProfile = useAuthStore(state => state.setProfile);
 
   const handleSubmitLoginPage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,9 +24,12 @@ function LoginPage() {
     }
     try {
       const response =  await loginUser(username, password);
+      setToken(response.data.token);
+      setProfile(response.data.profile);
       console.log(response);
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   } 
 
