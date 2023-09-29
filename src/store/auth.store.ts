@@ -15,6 +15,11 @@ export const useAuthStore = create(persist<State & Actions>(
     })),
     setProfile: (profile: object) => set((state) => ({
       profile
+    })),
+    setLogout: () => set((state) => ({
+      token: "",
+      profile: null,
+      isAuth: false,
     }))
   
   }), {

@@ -7,6 +7,7 @@ export interface State {
 export interface Actions {
   setToken: (token: string) => void;
   setProfile: (profile: object) => void;
+  setLogout: () => void;
 }
 
 export interface PropsProtecredRoutes {
