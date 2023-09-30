@@ -1,22 +1,25 @@
 import chatLogo from '../../assets/chaticon.png';
 import acceptUser from '../../assets/agregar-usuario.png';
 import logoutIcon from '../../assets/cerrar-sesion.png';
-import addUser from '../../assets/anadir.png'
+import addUser from '../../assets/anadir.png';
 import { toast } from 'sonner';
 import { useAuthStore } from '../../store/auth.store';
 import { Badge, Modal } from 'antd';
-import './navbar.css'
 import { useEffect, useState } from 'react';
+import { MagnifyingGlass } from 'react-loader-spinner';
+import './navbar.css'
 
 //Components
 import InputShared from '../Shared/InputShared/InputShared';
 import { BtnCancel, BtnOk } from '../Shared/Buttons/Buttons';
+import UserContactCard from '../userContactCard/UserContactCard';
 
 //API
 import { getContacts } from '../../api/contacts.api';
 
 //Interfaces
 import { InputSharedProps } from '../../interfaces/inputSharedProps';
+import { UserContact } from '../../interfaces/user';
 
 interface props {
   socket: any;
@@ -24,6 +27,9 @@ interface props {
 
 function Navbar({ socket }: props) {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [usersContacts, setUsersContacts] = useState<UserContact[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const showModal = () => {
     setOpen(true);
@@ -61,23 +67,21 @@ function Navbar({ socket }: props) {
       }
     };
   }, [socket]);
-
-  let timerId; 
-
   const handleChangeSearchContact = async (data: InputSharedProps) => {
-    if (timerId) {
-      clearTimeout(timerId);
+    setLoading(true)
+    try {
+        const res = await getContacts(data.value);
+        const users: UserContact[] = Object.values(res.data); 
+        setUsersContacts(users);
+        setLoading(false)
+    } catch (error) {
+      console.log(error);
+      setLoading(false)
+      setErrorMessage(error.response.data.message)
     }
-  
-    // Configurar un nuevo temporizador para enviar la solicitud después de un retraso
-    timerId = setTimeout(async () => {
-      console.log(data.value);
-      const res = await getContacts(data.value);
-      console.log(res);
-    }, 500); 
   }
-  
 
+console.log(usersContacts);
   return (
     <div className='navbarMainContainer'>
       <Modal
@@ -89,11 +93,7 @@ function Navbar({ socket }: props) {
           <div key="btnFooterDrawerContainer" className='btnFooterDrawerContainer'>
             <BtnCancel
               btnName='Cerrar'
-              btnHandleClick={() => console.log("Cancel")}
-              />
-            <BtnOk
-              btnName='Agregar'
-              btnHandleClick={() => console.log("Agregar")}
+              btnHandleClick={() => setOpen(false)}
             />
           </div>
         ]}
@@ -105,6 +105,28 @@ function Navbar({ socket }: props) {
           name='searchContact'
           toHandleChange={handleChangeSearchContact}
         />
+        <div>
+          {loading ? <p><MagnifyingGlass
+            visible={true}
+            height="50"
+            width="50"
+            ariaLabel="MagnifyingGlass-loading"
+            wrapperStyle={{}}
+            wrapperClass="MagnifyingGlass-wrapper"
+            glassColor='#c0efff'
+            color='#242424'
+          /></p> : null}
+          <div className='contactsUsersContainer'>
+            {!loading && usersContacts ? 
+              usersContacts.map((user, index) => (
+                <UserContactCard
+                  key={index}
+                  username={user.username}
+                />
+              )) : errorMessage
+            }
+          </div>
+        </div>
       </Modal>
       <div className='logoContainer'>
         <img src={chatLogo} alt="chatlogo" className='chatlogo' />
@@ -117,6 +139,7 @@ function Navbar({ socket }: props) {
             <img src={acceptUser} className='acceptIcon' alt="addUserIcon" />
           </Badge>
         </div>
+
         <img src={logoutIcon} className='userIcon' alt="logoutIcon" onClick={handleClickLogout} />
       </div>
     </div>

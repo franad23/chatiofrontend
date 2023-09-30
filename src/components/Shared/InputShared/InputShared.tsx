@@ -1,13 +1,16 @@
 import { ChangeEvent, useState } from 'react';
 import './inputshared.css'
 
+//Interfaces 
+import { InputSharedProps } from '../../../interfaces/inputSharedProps';
+
 interface Props {
   inputField: string;
   type: string;
   placeholder: string;
   value?: string;
   name: string;
-  toHandleChange: (e: object) => void;
+  toHandleChange: (e: InputSharedProps) => void;
 }
 
 function InputShared({ inputField, type, placeholder, value, name, toHandleChange }: Props) {
