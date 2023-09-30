@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FormEvent } from "react";
 import { Toaster, toast } from 'sonner'
 import { useAuthStore } from "../../store/auth.store";
+import { Navigate } from "react-router-dom";
 import './loginpage.css';
 
 //Components
@@ -11,9 +12,11 @@ import InputShared from '../../components/Shared/InputShared/InputShared';
 import { loginUser } from "../../api/auth.api";
 
 function LoginPage() {
-
   const setToken = useAuthStore(state => state.setToken);
   const setProfile = useAuthStore(state => state.setProfile);
+  const token = useAuthStore(state => state.token);
+
+  if (token) return <Navigate to="/dashboard"/>
 
   const handleSubmitLoginPage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

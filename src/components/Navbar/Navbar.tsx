@@ -4,8 +4,13 @@ import logoutIcon from '../../assets/cerrar-sesion.png';
 import { Toaster, toast } from 'sonner';
 import { useAuthStore } from '../../store/auth.store';
 import './navbar.css'
+import { useEffect } from 'react';
 
-function Navbar() {
+interface props {
+  socket: any;
+}
+
+function Navbar({socket}:props) {
   
   const setLogout = useAuthStore(state => state.setLogout);
 
@@ -16,14 +21,25 @@ function Navbar() {
           label: 'Sí',
           onClick: () => {
             setLogout();
+            if (socket) {
+              socket.disconnect();
+            }
           }
         }
     })
   }
 
+  useEffect(() => {
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, [socket]);
+
   return (
     <div className='navbarMainContainer'>
-      <Toaster position="top-right" />
+      {/* <Toaster position="top-right" /> */}
       <div className='logoContainer'>
         <img src={chatLogo} alt="chatlogo" className='chatlogo'/>
         <h1 className='navbarTitle'>Chatio</h1>

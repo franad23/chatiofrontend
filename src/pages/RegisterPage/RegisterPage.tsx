@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { FormEvent } from "react";
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from 'sonner';
+import { useAuthStore } from "../../store/auth.store";
+import { Navigate } from "react-router-dom";
 import './registerpage.css';
 
 //Components
@@ -10,6 +12,11 @@ import InputShared from '../../components/Shared/InputShared/InputShared';
 import { registerUser } from "../../api/auth.api";
 
 function RegisterPage() {
+
+  const token = useAuthStore(state => state.token);
+
+
+  if (token) return <Navigate to="/dashboard"/>
 
   const handleSubmitRegisterPage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,11 +40,12 @@ function RegisterPage() {
       }
     }
 }
-  
+
 
   return (
     <div className='mainContainerRegisterPage'>
       <Toaster position="top-right"/>
+      
       <form className='registerContainer' onSubmit={handleSubmitRegisterPage}>
         <div className='inputFieldsContainer'>
           <InputShared
