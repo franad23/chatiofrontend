@@ -1,4 +1,3 @@
-import { useAuthStore } from '../../store/auth.store';
 import io from "socket.io-client";
 import { useEffect, useState } from 'react';
 import './Userdashboard';
@@ -6,16 +5,16 @@ import './Userdashboard';
 //Components
 import Navbar from '../../components/Navbar/Navbar';
 
+const storedUser = localStorage.getItem("auth");
+const customUserId = storedUser ? JSON.parse(storedUser).state.profile : null;
 
-const socket = io("http://localhost:4000", {
-  // auth: {
-  //   customUserId: sessionStorage.getItem("usuario"),
-  // },
-});
+const socket = io("http://localhost:3000", {
+  auth: {
+    customUserId,
+  },
+})
 
 function Userdashboard() {
-
-  const state = useAuthStore(state => state);
   const [receivedMessages, setReceivedMessages] = useState<object[]>([]);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ function Userdashboard() {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       Userdashboard
     </div>
   )
