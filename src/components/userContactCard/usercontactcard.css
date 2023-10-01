@@ -33,4 +33,8 @@
 }
 .iconsUserContactCard{
   width: 25px;
+  cursor: pointer;
+}
+.notShowUserContact {
+  display: none;
 }

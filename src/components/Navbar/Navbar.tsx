@@ -81,7 +81,9 @@ function Navbar({ socket }: props) {
     }
   }
 
-console.log(usersContacts);
+  const handleAddContact = (data:string) => {
+    console.log(data);
+  }
   return (
     <div className='navbarMainContainer'>
       <Modal
@@ -122,6 +124,7 @@ console.log(usersContacts);
                 <UserContactCard
                   key={index}
                   username={user.username}
+                  handleAddContact={(data) => handleAddContact(data)}
                 />
               )) : errorMessage
             }
