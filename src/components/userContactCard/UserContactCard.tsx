@@ -4,21 +4,25 @@ import checkContactIcon from '../../assets/correcto.png';
 import { toast } from 'sonner';
 import './usercontactcard.css';
 
+//API
+import { addContact } from '../../api/contacts.api';
+
 interface PropsCard {
+  _id: string;
   username: string;
-  handleAddContact: (name: string) => void;
 }
 
 
 
-function UserContactCard({handleAddContact, username}: PropsCard) {
+function UserContactCard({_id, username}: PropsCard) {
   const [contactAdded, setcontactAdded] = useState(false);
   
 
-  const handleClickAddContact = (username: string) => {
+  const handleClickAddContact = async (username: string) => {
     setcontactAdded(!contactAdded);
     toast(`Se agrego a ${username} como contacto`);
-    handleAddContact(username);
+    const res = await addContact(_id, username);
+    console.log(res);
   }
   return (
     <div className='userContactCardMainContainer'>

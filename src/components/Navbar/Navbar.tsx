@@ -11,7 +11,7 @@ import './navbar.css'
 
 //Components
 import InputShared from '../Shared/InputShared/InputShared';
-import { BtnCancel, BtnOk } from '../Shared/Buttons/Buttons';
+import { BtnCancel } from '../Shared/Buttons/Buttons';
 import UserContactCard from '../userContactCard/UserContactCard';
 
 //API
@@ -70,20 +70,17 @@ function Navbar({ socket }: props) {
   const handleChangeSearchContact = async (data: InputSharedProps) => {
     setLoading(true)
     try {
-        const res = await getContacts(data.value);
-        const users: UserContact[] = Object.values(res.data); 
-        setUsersContacts(users);
-        setLoading(false)
+      const res = await getContacts(data.value);
+      const users: UserContact[] = Object.values(res.data); 
+      setUsersContacts(users);
+      setLoading(false)
     } catch (error) {
       console.log(error);
       setLoading(false)
       setErrorMessage(error.response.data.message)
     }
   }
-
-  const handleAddContact = (data:string) => {
-    console.log(data);
-  }
+console.log(usersContacts);
   return (
     <div className='navbarMainContainer'>
       <Modal
@@ -122,9 +119,9 @@ function Navbar({ socket }: props) {
             {!loading && usersContacts ? 
               usersContacts.map((user, index) => (
                 <UserContactCard
+                  _id={user._id}
                   key={index}
                   username={user.username}
-                  handleAddContact={(data) => handleAddContact(data)}
                 />
               )) : errorMessage
             }

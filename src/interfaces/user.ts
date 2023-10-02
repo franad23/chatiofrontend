@@ -4,7 +4,7 @@ export interface User {
 }
 
 export interface UserContact {
-  id: string,
+  _id: string,
   username: string,
   contacts?: object[]
 }
