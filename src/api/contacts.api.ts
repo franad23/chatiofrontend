@@ -6,5 +6,8 @@ export const getContacts = async (username: string) => {
 
 export const addContact = async (_id: string, username: string) => {
   return axios.patch(`/contacts`, { _id, username });
+}
 
+export const getContactsToAccept = async () => {
+  return axios.get(`/contacts/to-accept`);
 }

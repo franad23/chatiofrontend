@@ -20,6 +20,7 @@ import { getContacts } from '../../api/contacts.api';
 //Interfaces
 import { InputSharedProps } from '../../interfaces/inputSharedProps';
 import { UserContact } from '../../interfaces/user';
+import UserContactsToAccept from '../userContactsToAccept/UserContactsToAccept';
 
 interface props {
   socket: any;
@@ -27,21 +28,11 @@ interface props {
 
 function Navbar({ socket }: props) {
   const [open, setOpen] = useState(false);
+  const [userContactsDrawer, setUserContactsDrawer] = useState(false)
   const [loading, setLoading] = useState(false);
   const [usersContacts, setUsersContacts] = useState<UserContact[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleOk = () => {
-
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
+  const [contactsCount, setContactsCount] = useState(0);
 
   const setLogout = useAuthStore(state => state.setLogout);
 
@@ -80,14 +71,13 @@ function Navbar({ socket }: props) {
       setErrorMessage(error.response.data.message)
     }
   }
-console.log(usersContacts);
+
   return (
     <div className='navbarMainContainer'>
       <Modal
         open={open}
         title="Agregar contacto"
-        onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={() => setOpen(false)}
         footer={[
           <div key="btnFooterDrawerContainer" className='btnFooterDrawerContainer'>
             <BtnCancel
@@ -133,10 +123,14 @@ console.log(usersContacts);
         <h1 className='navbarTitle'>Chatio</h1>
       </div>
       <div className='rightContainerNavbar'>
-        <img src={addUser} className='userIcon' alt="adduserIcon" />
-        <div className='acceptUserContainer' onClick={showModal}>
-          <Badge count={5} size="small">
-            <img src={acceptUser} className='acceptIcon' alt="addUserIcon" />
+        <img src={addUser} className='userIcon' alt="adduserIcon" onClick={() => setOpen(true)} />
+        <div className='acceptUserContainer' >
+          <Badge count={contactsCount} size="small">
+            <img src={acceptUser} className='acceptIcon' alt="addUserIcon" onClick={() => setUserContactsDrawer(!userContactsDrawer)}/>
+            <UserContactsToAccept
+              openDrawer={userContactsDrawer}
+              contactsNum={(data) => setContactsCount(data)}
+            />
           </Badge>
         </div>
 

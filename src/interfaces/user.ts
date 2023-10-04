@@ -8,3 +8,9 @@ export interface UserContact {
   username: string,
   contacts?: object[]
 }
+
+export interface UserContact {
+  _id: string,
+  username: string,
+  isAccepted: boolean,
+}
