@@ -7,6 +7,7 @@ import { UserContact } from '../../interfaces/user';
 
 //Components
 import { BtnCancel } from '../Shared/Buttons/Buttons';
+import UserContactToAcceptCard from '../userContactToAcceptCard/UserContactToAcceptCard';
 
 //API
 import { getContactsToAccept } from '../../api/contacts.api';
@@ -20,7 +21,7 @@ function UserContactsToAccept({contactsNum, openDrawer}: Props) {
   const [open, setOpen] = useState(false);
   const [contactsToAccept, setContactsToAccept] = useState<UserContact[]>([]);
 
-
+console.log(contactsToAccept);
   
   const getContactsToAcceptFunction = async () => {
     try {
@@ -40,20 +41,24 @@ function UserContactsToAccept({contactsNum, openDrawer}: Props) {
     <div className='userContactsToAcceptMainContainer'>
       <Modal
         open={open}
-        title="Agregar contacto"
+        title="Aceptar Contactos"
         onCancel={() => setOpen(false)}
         footer={[
           <div key="btnFooterDrawerContainer" className='btnFooterDrawerContainer'>
             <BtnCancel
               btnName='Cerrar'
               btnHandleClick={() => setOpen(false)}
-
             />
           </div>
         ]}
       >
-        <div>
-          
+        <div className='contactToAcceptContainer'>
+          {contactsToAccept.map((contact, index) => (
+            <UserContactToAcceptCard 
+              key={index}
+              username={contact.username}
+            />
+          ))}
         </div>
       </Modal>
     </div>

@@ -11,3 +11,7 @@ export const addContact = async (_id: string, username: string) => {
 export const getContactsToAccept = async () => {
   return axios.get(`/contacts/to-accept`);
 }
+
+export const contactAccepted = async (_id: string, username: string, isAccepted: boolean) => {
+  return axios.patch(`/contacts/to-accept`, { _id, username, isAccepted });
+}
