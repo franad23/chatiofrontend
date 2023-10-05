@@ -14,7 +14,15 @@ function UserContactToAcceptCard({_id, username}: Props) {
 
   const handleAcceptUser = async (_id: string, isAccepted: boolean) => {
     try {
-      const res = await contactAccepted(_id, isAccepted);
+      const res = await contactAccepted(_id, username, isAccepted);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleNotAcceptUser = async (_id: string, isAccepted: boolean) => {
+    try {
+      const res = await contactAccepted(_id, username, isAccepted);
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -36,7 +44,7 @@ function UserContactToAcceptCard({_id, username}: Props) {
         src={cancelLogo} 
         alt="checkicon" 
         className= 'iconsUserContactCard'
-        onClick={() => handleAcceptUser (_id, true)}
+        onClick={() => handleNotAcceptUser (_id, false)}
       />
     </div>
   </div>

@@ -56,6 +56,7 @@ console.log(contactsToAccept);
           {contactsToAccept.map((contact, index) => (
             <UserContactToAcceptCard 
               key={index}
+              _id={contact._id}
               username={contact.username}
             />
           ))}
