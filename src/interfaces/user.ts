@@ -9,7 +9,7 @@ export interface UserContact {
   contacts?: object[]
 }
 
-export interface UserContact {
+export interface UserContacts {
   _id: string,
   username: string,
   isAccepted: boolean,

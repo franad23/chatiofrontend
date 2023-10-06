@@ -6,6 +6,7 @@ import './Userdashboard';
 
 //Components
 import Navbar from '../../components/Navbar/Navbar';
+import LeftContainerContacts from "../../components/leftContainerContacts/LeftContainerContacts";
 
 function Userdashboard() {
   const [receivedMessages, setReceivedMessages] = useState<object[]>([]);
@@ -41,7 +42,9 @@ function Userdashboard() {
       <Navbar
         socket= {socket}
       />
-      Userdashboard
+      <main>
+        <LeftContainerContacts/>
+      </main>
     </div>
   )
 }
