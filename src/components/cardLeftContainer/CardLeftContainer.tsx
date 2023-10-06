@@ -11,6 +11,8 @@ interface Props {
 
 
 function CardLeftContainer({_id, username, isOnline}:Props) {
+
+  console.log(isOnline);
   return (
     <div className='cardLeftContainerMainContainer'>
       <div className='iconUserCard'>
@@ -18,10 +20,17 @@ function CardLeftContainer({_id, username, isOnline}:Props) {
       </div>
       <div>
         <h2 className='usernameCardTitleLeftContainer'>{username}</h2>
-        <div className='statusContainer'>
-          <img className='greendotIcon' src={greenDot} alt="greendot" />
-          <span>Online</span>
-        </div>
+        {
+          isOnline ? 
+            <div className='statusContainer'>
+              <img className='greendotIcon' src={greenDot} alt="greendot" />
+            <span>Online</span>
+            </div> :
+            <div className='statusContainer'>
+              <img className='greendotIcon' src={redDot} alt="greendot" />
+            <span>Offline</span>
+            </div>
+        }
         {/* {isOnline ? <span>Online</span>:null} */}
       </div>
     </div>

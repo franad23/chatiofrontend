@@ -2,15 +2,19 @@ import'./leftcontainercontacts.css'
 import { useEffect, useState } from 'react'
 
 //Interfaces 
-import { UserContacts } from '../../interfaces/user'
+import { UserContacts, UserSocket } from '../../interfaces/user'
 
 //API
 import { getUserContactsAccepted } from '../../api/contacts.api'
 
 //Components 
-import CardLeftContainer from '../cardLeftContainer/cardLeftContainer'
+import CardLeftContainer from '../cardLeftContainer/CardLeftContainer'
 
-function LeftContainerContacts() {
+interface Props { 
+  usersOnline: UserSocket[];
+}
+
+function LeftContainerContacts({usersOnline}:Props) {
 
   const [usersAccepted, setUsersAccepted] = useState<UserContacts[]>([])
 
@@ -30,6 +34,7 @@ console.log(usersAccepted);
             key={user._id}
             _id={user._id}
             username={user.username}
+            isOnline={usersOnline.some(userOnline => userOnline.user.id === user._id)}
           />
         ))
       }

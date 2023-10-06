@@ -4,6 +4,9 @@ import { Toaster, toast } from 'sonner';
 import { useAuthStore } from "../../store/auth.store";
 import './Userdashboard';
 
+//Interfaces 
+import { UserSocket } from "../../interfaces/user";
+
 //Components
 import Navbar from '../../components/Navbar/Navbar';
 import LeftContainerContacts from "../../components/leftContainerContacts/LeftContainerContacts";
@@ -12,6 +15,7 @@ function Userdashboard() {
   const [receivedMessages, setReceivedMessages] = useState<object[]>([]);
   const [socket, setSocket] = useState<any>(null);
   const profile = useAuthStore(state => state.profile);
+  const [usersOnline, setUsersOnline] = useState<UserSocket[]>([])
 
   useEffect(() => {
     const storedUser = localStorage.getItem("auth");
@@ -31,11 +35,11 @@ function Userdashboard() {
       });
       
       newSocket.on("connectedUsers", (data) => {
-        console.log(data);
+        setUsersOnline(data)
       });
     }
   }, [receivedMessages]);
-
+console.log(usersOnline);
   return (
     <div>
       <Toaster position="top-right"/>
@@ -43,7 +47,9 @@ function Userdashboard() {
         socket= {socket}
       />
       <main>
-        <LeftContainerContacts/>
+        <LeftContainerContacts
+          usersOnline={usersOnline}
+        />
       </main>
     </div>
   )
